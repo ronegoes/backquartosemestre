@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Loja | Loja do Rone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ui.css' %}" rel="stylesheet">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+
+    <style>
+        /* Fundo padrão em todas as páginas */
+        body {
+            display: flex;
+            min-height: 100vh;
+            <img src="{% static 'images/2.jpg' %}" height="40">
+        }
+
+        /* Fundo branco transparente para destacar o conteúdo */
+        .section-content .container {
+            background-color: rgba(255, 255, 255, 0.88);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        }
+
+        header.section-header {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid #ddd;
+        }
+
+        footer.section-footer {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="section-header">
+    <nav class="navbar navbar-expand-sm navbar-light border-bottom">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <img src="{% static 'images/tela.jpg' %}" height="40" alt="Logo Loja do Rone">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'cart' %}" class="nav-link">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="badge badge-pill badge-danger">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<section class="section-content">
+    <div class="container">
+        <h2 class="my-4">Todos os Produtos</h2>
+        <div class="row">
+            <p>Nenhum produto encontrado.</p>
+            <p>
+                <a href="{% url 'dashboard' %}" class="btn btn-success mt-3">← Voltar ao Dashboard</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer class="section-footer border-top text-center py-3">
+    <p>&copy; 2025 Loja do Rone</p>
+</footer>
+
+<script src="{% static 'js/jquery-2.0.0.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

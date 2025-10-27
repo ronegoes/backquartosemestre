@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2>💳 Pagamento</h2>
+    {% if cart %}
+        <ul class="list-group mb-3">
+            {% for id, item in cart.items %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <div>{{ item.name }} (x{{ item.quantity }})</div>
+                    <span>R$ {{ item.price|floatformat:2 }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <h4>Total: R$ {{ total|floatformat:2 }}</h4>
+
+        <div class="mt-4">
+            <h5>Escolha a forma de pagamento:</h5>
+            <a href="{% url 'generate_receipt_pdf' %}" class="btn btn-outline-primary">📄 Gerar Recibo (PDF)</a>
+            <a href="#" class="btn btn-outline-success">💰 Pix</a>
+            <a href="#" class="btn btn-outline-dark">💳 Cartão</a>
+            <a href="#" class="btn btn-outline-info">💸 PayPal</a>
+        </div>
+    {% else %}
+        <p>Seu carrinho está vazio.</p>
+    {% endif %}
+</div>
+</body>
+</html>

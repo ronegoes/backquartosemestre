@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>🛒 Seu Carrinho</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="mb-4">🛒 Seu Carrinho</h2>
+
+    {% if cart %}
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for id, item in cart.items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>R$ {{ item.price|floatformat:2 }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>R$ {{ item.price|floatformat:2|add:item.quantity|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="text-right">💰 Total: R$ {{ total|floatformat:2 }}</h4>
+
+    <div class="text-right mt-4">
+        <a href="{% url 'clear_cart' %}" class="btn btn-outline-danger">🧹 Limpar Carrinho</a>
+        <a href="{% url 'place_order' %}" class="btn btn-success">💳 Finalizar Compra</a>
+    </div>
+
+    {% else %}
+        <p>Seu carrinho está vazio.</p>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'store' %}" class="btn btn-secondary">← Voltar à Loja</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Pedidos | Loja do Rone{% endblock %}
+
+{% block content %}
+<h3>Lista de Pedidos</h3>
+<p>Aqui você pode visualizar e gerenciar os pedidos dos clientes.</p>
+
+<!-- Exemplo de tabela -->
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Valor Total</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>Maria</td><td>R$ 150,00</td><td>Pago</td></tr>
+        <tr><td>2</td><td>João</td><td>R$ 220,00</td><td>Pendente</td></tr>
+    </tbody>
+</table>
+
+<a href="{% url 'dashboard' %}" class="btn btn-voltar mt-3">← Voltar ao Dashboard</a>
+{% endblock %}

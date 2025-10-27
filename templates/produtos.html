@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Loja | Loja do Rone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ui.css' %}" rel="stylesheet">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<header class="section-header">
+    <nav class="navbar navbar-expand-sm navbar-light border-bottom">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <img src="{% static 'images/2.jpg' %}" height="40" alt="Logo">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'cart' %}" class="nav-link">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="badge badge-pill badge-danger">
+                            {{ cart_item_count|default:0 }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<section class="section-content">
+    <div class="container">
+        <h2 class="my-4">Todos os Produtos</h2>
+        <div class="row">
+            {% for produto in produtos %}
+                <div class="col-md-3">
+                    <div class="card card-product-grid">
+                        <a href="{% url 'produto_detalhe' produto.id %}" class="img-wrap">
+                            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                        </a>
+                        <figcaption class="info-wrap">
+                            <a href="{% url 'produto_detalhe' produto.id %}" class="title">{{ produto.nome }}</a>
+                            <div class="price mt-1">R$ {{ produto.preco }}</div>
+                        </figcaption>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<footer class="section-footer border-top text-center py-3">
+    <p>&copy; 2025 Loja do Rone</p>
+</footer>
+
+<script src="{% static 'js/jquery-2.0.0.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

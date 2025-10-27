@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizar Pedido</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <style>
+        .pix-box { border: 2px dashed #28a745; padding: 15px; border-radius: 8px; text-align: center; }
+        .form-card { border: 1px solid #ccc; padding: 15px; border-radius: 8px; background: #f9f9f9; }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+    <h3>💳 Revisar Pedido</h3>
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+    {% if cart %}
+        <ul class="list-group mb-3">
+            {% for id, item in cart.items %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ item.name }} (x{{ item.quantity }})</span>
+                <strong>R$ {{ item.price|floatformat:2 }}</strong>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h5>Total: <strong>R$ {{ total|floatformat:2 }}</strong></h5>
+        <hr>
+
+        {% if not show_pix and not show_card and not show_paypal %}
+        <form method="post" action="{% url 'place_order' %}">
+            {% csrf_token %}
+            <label class="form-label">Escolha o método de pagamento:</label>
+            <div class="form-check">
+                <input type="radio" name="payment_method" value="pix" id="pix" checked> PIX
+            </div>
+            <div class="form-check">
+                <input type="radio" name="payment_method" value="cartao" id="cartao"> Cartão de Crédito
+            </div>
+            <div class="form-check mb-3">
+                <input type="radio" name="payment_method" value="paypal" id="paypal"> PayPal
+            </div>
+            <button type="submit" class="btn btn-primary">Continuar</button>
+            <a href="{% url 'generate_receipt_pdf' %}" class="btn btn-outline-secondary">Gerar PDF</a>
+        </form>
+        {% endif %}
+
+        {% if show_pix %}
+            <h3>Pagamento via PIX</h3>
+            <img src="{{ pix_qr }}" alt="QR PIX" style="width:200px; height:auto; margin:15px 0;">
+            <p><strong>Chave PIX:</strong> {{ pix_key }}</p>
+
+            <form method="post" action="{% url 'place_order' %}">
+                {% csrf_token %}
+                <input type="hidden" name="payment_method" value="pix_paid">
+                <button type="submit" class="btn btn-success">✅ Já paguei com PIX</button>
+            </form>
+            {% endif %}
+
+
+        {% if show_card %}
+        <div class="form-card mt-3">
+            <h5>Pagamento com Cartão</h5>
+            <form method="post" action="{% url 'order_complete' %}">
+                {% csrf_token %}
+                <div class="mb-2"><input type="text" name="card_number" placeholder="Número do cartão" class="form-control"></div>
+                <div class="mb-2"><input type="text" name="expiry" placeholder="Validade (MM/AA)" class="form-control"></div>
+                <div class="mb-2"><input type="text" name="cvv" placeholder="CVV" class="form-control"></div>
+                <button class="btn btn-success">Pagar com Cartão</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if show_paypal %}
+        <h3>Pagamento via PayPal</h3>
+        <p>Você será redirecionado para a simulação do PayPal.</p>
+
+        <form method="post" action="{% url 'place_order' %}">
+            {% csrf_token %}
+            <input type="hidden" name="payment_method" value="paypal_paid">
+            <button type="submit" class="btn btn-primary">💳 Confirmar Pagamento PayPal</button>
+        </form>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">Seu carrinho está vazio.</div>
+    {% endif %}
+</div>
+</body>
+</html>

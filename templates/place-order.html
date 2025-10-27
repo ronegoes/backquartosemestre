@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizar compra</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2>💳 Revisar Pedido</h2>
+
+        {% if cart %}
+        <ul class="list-group mb-3">
+            {% for id, item in cart.items %}
+            <li class="list-group-item d-flex justify-content-between">
+                <div>{{ item.name }} (x{{ item.quantity }})</div>
+                <span>R$ {{ item.price|floatformat:2 }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h4>Total: R$ {{ total|floatformat:2 }}</h4>
+
+        <form method="post" action="{% url 'order_complete' %}">
+
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Finalizar Pedido</button>
+        </form>
+        {% else %}
+        <p>Seu carrinho está vazio.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

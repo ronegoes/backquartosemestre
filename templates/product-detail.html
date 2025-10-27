@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Produto | Loja do Rone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ui.css' %}" rel="stylesheet">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    <link href="{% static 'fonts/fontawesome/css/all.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<header class="section-header">
+    <nav class="navbar navbar-expand-sm navbar-light border-bottom">
+        <div class="container">
+            <a href="{% url 'home' %}" class="navbar-brand">
+                <img src="{% static 'images/logo.png' %}" height="40">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'cart' %}" class="nav-link">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="badge badge-pill badge-danger">{{ cart_items|length|default:0 }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-6">
+                <div class="gallery-wrap">
+                    <div class="img-big-wrap">
+                        <a href="#"><img src="{% static 'images/items/sample.jpg' %}" alt="Imagem do produto"></a>
+                    </div>
+                </div>
+            </aside>
+            <main class="col-md-6">
+                <h2 class="title">{{ product.name }}</h2>
+                <div class="mb-3">
+                    <var class="price h4">R$ {{ product.price|floatformat:2 }}</var>
+                </div>
+                <p>{{ product.description }}</p>
+                <hr>
+                <a href="{% url 'cart' %}" class="btn btn-primary">Adicionar ao carrinho</a>
+            </main>
+        </div>
+    </div>
+</section>
+
+<footer class="section-footer border-top text-center py-3">
+    <p>&copy; 2025 Loja do Rone</p>
+</footer>
+
+<script src="{% static 'js/jquery-2.0.0.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

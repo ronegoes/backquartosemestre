@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar | Loja do Rone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ui.css' %}" rel="stylesheet">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<header class="section-header">
+    <nav class="navbar navbar-expand-sm navbar-light border-bottom">
+        <div class="container">
+            <a href="{% url 'home' %}" class="navbar-brand">
+                <img src="{% static 'images/logo.png' %}" height="40">
+            </a>
+        </div>
+    </nav>
+</header>
+
+<section class="section-content padding-y">
+    <div class="container" style="max-width: 550px;">
+        <h3 class="text-center mb-4">Criar Conta</h3>
+
+        {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Nome de Usuário</label>
+                <input type="text" name="username" class="form-control" placeholder="Digite um nome de usuário" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Digite seu e-mail" required>
+            </div>
+
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" name="password" class="form-control" placeholder="Digite uma senha" required>
+            </div>
+
+            <div class="form-group">
+                <label>Confirmar Senha</label>
+                <input type="password" name="confirm_password" class="form-control" placeholder="Confirme sua senha" required>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block mt-3">Cadastrar</button>
+        </form>
+
+        <p class="text-center mt-3">
+            Já tem uma conta? <a href="{% url 'signin' %}">Entre aqui</a>
+        </p>
+    </div>
+</section>
+
+<footer class="section-footer border-top text-center py-3">
+    <p>&copy; 2025 Loja do Rone</p>
+</footer>
+
+<script src="{% static 'js/jquery-2.0.0.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

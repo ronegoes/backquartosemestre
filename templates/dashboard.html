@@ -1,0 +1,13 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Dashboard | Loja do Rone{% endblock %}
+
+{% block content %}
+<h2>Bem-vindo ao Painel, Rone!</h2>
+<p>Escolha uma das seções no menu lateral para gerenciar seu sistema.</p>
+
+<div class="mt-4">
+    <a href="{% url 'pedidos' %}" class="btn btn-primary">Ver Pedidos</a>
+    <a href="{% url 'produtos' %}" class="btn btn-secondary">Ver Produtos</a>
+    <a href="{% url 'clientes' %}" class="btn btn-info">Ver Clientes</a>
+</div>
+{% endblock %}
